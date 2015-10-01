@@ -1,0 +1,19 @@
+{
+  "name": "angular-content-editable",
+  "version": "1.0.0",
+  "description": "modify in real time any html tag you want",
+  "main": "Gruntfile.js",
+  "directories": {
+    "example": "example",
+    "test": "test"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "angular",
+    "directive"
+  ],
+  "author": "codekraft-studio",
+  "license": "ISC"
+}
