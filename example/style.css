@@ -4,11 +4,11 @@ html, body { width: 100%; min-height: 100%; position: relative; margin: 0;height
 
 article, aside, details, figcaption, figure, footer, header, hgroup, main, menu, nav, summary { display: block; }
 
-h1 { color: #FFF; font-weight: 700; font-size: 4em; }
+h1 { color: #FFF; font-weight: 700; font-size: 3.5em; }
 
-h2 { color: #337ab7; font-weight: 800; font-size: 2.2em; font-family: 'rs'; }
+h2 { color: #337ab7; font-weight: 800; font-size: 2em; font-family: 'rs'; }
 
-h3 { color: #555; font-weight: 700; font-size: 2em; margin: 64px 0 16px; font-family: 'rs'; }
+h3 { color: #555; font-weight: 700; font-size: 1.5em; margin: 64px 0 16px; font-family: 'rs'; }
 
 h4 { color: #337ab7; font-weight: 700; font-size: 1.6em; margin: 24px 0 16px; }
 
