@@ -17,11 +17,11 @@ Example basic:
 ```
 Example single line:
 ```html
-<div single-line="true" content-editable>Change me if you like.</div>
+<div single-line="true" content-editable>Change me anyway.</div>
 ```
 Example focus all text on click and after change run callback:
 ```html
-<span focus-select="true" edit-callback="myFunc" content-editable>Change me if you like.</span>
+<span focus-select="true" edit-callback="myFunc" content-editable>Change me!</span>
 ```
 ```javascript
 angular.module('myApp')
