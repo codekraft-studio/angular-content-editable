@@ -1,6 +1,6 @@
 {
   "name": "angular-content-editable",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "modify in real time any html tag you want",
   "main": "Gruntfile.js",
   "directories": {

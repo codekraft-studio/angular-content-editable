@@ -19,35 +19,42 @@ function contentEditable($log,$sce,$compile,$window) {
 
     // return if ng model not specified
     if(!ngModel) {
-      $log.warn('Error: ngModel is required in elem: ', elem)
-      return
+      $log.warn('Error: ngModel is required in elem: ', elem);
+      return;
     }
+
+    var noEscape = true;
+
+    // add default class
+    elem.addClass('content-editable');
 
     // if model is invalid or null
-    // set his value to elem content
+    // fill his value with elem html content
     if( !scope.ngModel ) {
-      ngModel.$setViewValue(elem.html())
+      ngModel.$setViewValue( elem.html() );
     }
 
-    // render with:
-    // model view value or elem value
     ngModel.$render = function() {
-      elem.html( ngModel.$viewValue || elem.html() )
+      // render always with model value
+      elem.html( ngModel.$modelValue )
     }
 
-    // make editable and focus
+    /**
+     * On click turn the element
+     * to editable and focus it
+     */
     elem.bind('click', function(e) {
-      e.preventDefault()
-      elem.attr('contenteditable', 'true')
-      elem[0].focus()
+      e.preventDefault();
+      elem.attr('contenteditable', 'true');
+      return elem[0].focus();
     })
 
-    // focus function
+    /**
+     * On element focus
+     */
     elem.bind('focus', function(e) {
 
-      // set validity to true
-      // this is for custom behaviours
-      ngModel.$valid = true
+      noEscape = true;
 
       // select all on focus
       if( attrs.focusSelect ) {
@@ -56,67 +63,84 @@ function contentEditable($log,$sce,$compile,$window) {
         $window.getSelection().addRange(range)
       }
 
-      // if render-html is enabled convert to plaintext
+      // if render-html is enabled convert
+      // all text content to plaintext
       // in order to modify html tags
       if( attrs.renderHtml ) {
-        var content = elem.html()
-        elem[0].textContent = content
+        elem[0].textContent = elem.html();
       }
 
     })
 
-    // make not editable and lose focus
+    /**
+     * On element blur turn off
+     * editable mode, if HTML, render
+     * update model value and run callback
+     * if specified
+     */
     elem.bind('blur', function() {
 
       var html;
 
-      // remove attribute
       elem.attr('contenteditable', 'false')
 
-      // if render html attribute is enabled
-      if( attrs.renderHtml && ngModel.$valid ) {
+      // if text needs to be rendered as html
+      if( attrs.renderHtml && noEscape ) {
+
+        console.log(noEscape);
         // get plain text html (with html tags)
-        // (replace blank spaces)
+        // replace all blank spaces
         html = elem[0].textContent.replace(/\u00a0/g, " ")
         // update elem html value
         elem.html(html)
 
       } else {
-        // clear text content
+
+        // get element content replacing html tag
         html = elem.html().replace(/<div>/g, '').replace(/&nbsp;/g, ' ').replace(/<\/div>/g, '');
       }
 
-      // if element is different from his model
-      // and a callback isdefined run it
-      if( html != ngModel.$modelValue && scope.editCallback ) {
-        // pass to callback values: current text and element
-        scope.editCallback(html, elem)
+      // if element value is
+      // different from model value
+      if( html != ngModel.$modelValue ) {
+
+        /**
+         * This method should be called
+         * when a control wants to
+         * change the view value
+         */
+        ngModel.$setViewValue(html)
+
+        // if user passed a valid callback
+        if( scope.editCallback && angular.isFunction(scope.editCallback) ) {
+          // apply the callback
+          // passing: current text and element
+          return scope.$apply( scope.editCallback(html, elem) );
+        }
+
       }
 
-      // set ngModel view value
-      ngModel.$setViewValue(html)
     })
 
     // bind esc and enter keys
     elem.bind('keydown', function(e) {
 
-      // tab key: trigger blur event
+      // on tab key blur and
+      // TODO: focus to next
       if(e.which == 9) {
-        return elem[0].blur()
+        return elem[0].blur();
       }
 
-      // esc key: rollback and blur
+      // on esc key roll back value and blur
       if(e.which == 27) {
-        ngModel.$rollbackViewValue()
-        // set pristine state
-        // (alter renderHtml behaviours)
-        ngModel.$valid = false
-        return elem[0].blur()
+        ngModel.$rollbackViewValue();
+        noEscape = false;
+        return elem[0].blur();
       }
 
-      // enter key: simple blur
+      // if single line blur or enter key
       if(e.which == 13 && attrs.singleLine) {
-        return elem[0].blur()
+        return elem[0].blur();
       }
 
     })

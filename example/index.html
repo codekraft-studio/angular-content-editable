@@ -21,7 +21,7 @@
       <header>
         <div class="hcont">
           <h1>angular-content-editable</h1>
-          <h2>click and edit what you want!</h2>
+          <h2>add the directive then click and edit what you want</h2>
         </div>
         <a href="https://github.com/codekraft-studio"><img style="position: absolute; top: 0; right: 0; border: 0;" src="https://camo.githubusercontent.com/52760788cde945287fbb584134c4cbc2bc36f904/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f72696768745f77686974655f6666666666662e706e67" alt="Fork me on GitHub" data-canonical-src="https://s3.amazonaws.com/github/ribbons/forkme_right_white_ffffff.png"></a>
       </header>
@@ -29,41 +29,64 @@
 
         <div class="hcont">
 
-          <h2 class="editable" ng-model="myModel" single-line="true" content-editable>
-            A mispelled sngle line ttle, correkt me pleas!
-          </h2>
+          <h2 class="editable" ng-model="viewStrings['pageTitle']" single-line="true" edit-callback="saveStrings" content-editable></h2>
 
           <p>
             The header above is enabled with the directive <b>content-editable</b> and you can correct it by clicking.
-            <br>This is a normal non-editable paragraph instead.
+            <br>This is a normal non-editable paragraph instead. All the other paragraphs, but it can be anything, can be edited
+            <br>simply by clicking on it.
           </p>
 
-          <p class="editable" ng-model="paragraphModel" focus-select="true" content-editable>
-            This paragraph has the <b>focus-select attribute</b>, when you click it, it auto select all text on focus.
+          <p class="editable" ng-model="viewStrings['classParagraph']" focus-select="true" edit-callback="saveStrings" content-editable>
+            All the elements with the directive will get the <b>editable</b> class by default, you can specify your own class with the <b>editable-class</b> attribute.
+          </p>
+
+          <p class="editable" ng-model="viewStrings['firstParagraph']" focus-select="true" edit-callback="saveStrings" content-editable>
+            This paragraph has the <b>focus-select</b> attribute, this means when you focus or click on it, it will auto select all text inside.
             <br>So, you can easily edit it by clicking it and pressing <kbd>Backspace</kbd> to erase all text selected.
-            <br>If <b>you make a mess</b> and you want to <b>undo the changes</b> simply press <kbd>Esc</kbd> and rollback to previous value.
+            <br>And remember, if <b>you made a mess</b> and you want to <b>undo the changes</b> simply press <kbd>Esc</kbd> and rollback to previous value.
           </p>
 
-          <p class="editable" ng-model="paragraphHTMLModel" focus-select="true" render-html="true" content-editable>
-            You can also add the attribute <b>render-html</b> and allow the directive to compile any html text you entered.
-            <br>Try to enter custom html tags into this one.
+          <p class="editable" ng-model="viewStrings['secondParagraph']" edit-callback="saveStrings" render-html="true" content-editable>
+            This element is enabled with the <b>render-html</b> attribute that allow to modify the html code of the content.
+            Try <i>clicking somewhere</i> and you will see how it works!
           </p>
 
-          <h3 ng-model="paragraphCallback" single-line="true" edit-callback="exitCallback" content-editable>
-            If you need to call an action when the changes are submitted specify a <b>edit-callback</b> function.
-          </h3>
+          <p ng-model="paragraphCallback" single-line="true" edit-callback="exitCallback" content-editable>
+            If you specify a valid function inside a <b>edit callback</b> attribute every time your model change, the callback will run
+            <br>and you can make her doing all types of crazy things, like: <i>saving the data just changed with a ajax http request</i>, or <i>save the data in local storage</i> like in the example showed in this page
+          </p>
 
         </div>
+
       </section>
     </article>
   </body>
-  <script src="https://maps.googleapis.com/maps/api/js?libraries=places&sensor=false"></script>
   <script type="text/javascript" src="../test/vendor/angular.min.js"></script>
-  <script type="text/javascript" src="app.js"></script>
-  <script type="text/javascript" src="../dist/content-editable.directive.min.js"></script>
+  <script type="text/javascript" src="lib/ngStorage.js"></script>
   <script>
+
+    angular.module('app', ['ngStorage'])
+
+    .controller('mainCtrl', function($scope, $localStorage) {
+
+      // get example strings
+      $scope.viewStrings = $localStorage.getObject('exampleStrings') || [];
+
+      $scope.saveStrings = function(text,elem) {
+        $localStorage.setObject('exampleStrings', $scope.viewStrings)
+      }
+
+      $scope.exitCallback = function(text, elem) {
+        alert('callback dude!');
+      }
+
+    })
+
     angular.element(document).ready(function() {
       angular.bootstrap(document, ['app'])
     })
+
   </script>
+  <script type="text/javascript" src="../dist/content-editable.directive.js"></script>
 </html>
