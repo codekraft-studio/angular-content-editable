@@ -66,9 +66,10 @@
   <script type="text/javascript" src="lib/ngStorage.js"></script>
   <script>
 
-    angular.module('app', ['ngStorage'])
-
-    .controller('mainCtrl', function($scope, $localStorage) {
+    angular.module('app', [
+      'content-editable',
+      'ngStorage'
+    ]).controller('mainCtrl', function($scope, $localStorage) {
 
       // get example strings
       $scope.viewStrings = $localStorage.getObject('exampleStrings') || [];
@@ -88,5 +89,5 @@
     })
 
   </script>
-  <script type="text/javascript" src="../dist/content-editable.directive.js"></script>
+  <script type="text/javascript" src="../dist/content-editable.directive.min.js"></script>
 </html>

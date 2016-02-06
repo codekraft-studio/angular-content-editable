@@ -1,16 +1,36 @@
 # angular-content-editable
 angular directive for modify in real time any html tag you want
 
-##### Directive attributes:
+## Getting started:
+Download the package using npm:
+```bash
+npm install angular-content-editable
+```
+or directly from github.
+
+Add the script to your page dependencies:
+```html
+<script type="text/javascript" src="content-editable.min.js"></script>
+```
+And finally add __content-editable__ to your module dependencies:
+```javascript
+angular.module('app', ['content-editable'])
+```
+and you are ready to go, add the directive to any element you want:
+```html
+<a href="!#" content-editable>edit my text</a>
+```
+---
+### Directive attributes:
   * __single-line__: if set to true makes the enter key save and blur
   * __focus-select__: if set to true when element goes to focus, all the text inside will be selected
   * __render-html__: if set to true allow the text passed as input to be compiled and rendered
   * __edit-callback__: a callback that is called wherever the model value is changed
 
 Note that, __edit-callback__ has two arguments:
-  * text: the new text inside the element
-  * elem: the element that has been modified
-
+  * __text__: the new text inside the element
+  * __elem__: the element that has been modified
+---
 ## Example basic:
 Simply adding the directive makes the element fully editable.
 ```html

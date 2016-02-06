@@ -1,4 +1,4 @@
-angular.module('app')
+angular.module('content-editable', [])
 
 .directive('contentEditable', contentEditable)
 

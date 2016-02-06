@@ -10,11 +10,19 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/codekraft-studio/angular-content-editable.git"
+  },
   "keywords": [
     "angular",
     "directive"
   ],
   "author": "codekraft-studio",
+  "bugs": {
+    "url": "https://github.com/codekraft-studio/angular-content-editable/issues"
+  },
+  "homepage": "https://github.com/codekraft-studio/angular-content-editable#readme",
   "license": "ISC",
   "devDependencies": {
     "grunt": "^0.4.5",
