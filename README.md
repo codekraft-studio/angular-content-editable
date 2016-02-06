@@ -28,8 +28,9 @@ and you are ready to go, add the directive to any element you want:
   * __edit-callback__: a callback that is called wherever the model value is changed
 
 Note that, __edit-callback__ has two arguments:
-  * __text__: the new text inside the element
-  * __elem__: the element that has been modified
+ * __text__: the new text inside the element
+ * __elem__: the element that has been modified
+
 ---
 ## Example basic:
 Simply adding the directive makes the element fully editable.
