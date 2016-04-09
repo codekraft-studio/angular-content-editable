@@ -1,6 +1,8 @@
 # angular-content-editable
 angular directive for modify in real time any html tag you want
 
+### [DEMO](http://www.codekraft.it/demos/angular-content-editable/)
+
 ## Getting started:
 Download the package using npm:
 ```bash
