@@ -24,9 +24,7 @@ function contentEditable($log,$sce,$compile,$window) {
     }
 
     var noEscape = true;
-
-    // add default class
-    elem.addClass('content-editable');
+    var editableClass = attrs.editableClass || 'content-editable';
 
     // if model is invalid or null
     // fill his value with elem html content
@@ -34,8 +32,11 @@ function contentEditable($log,$sce,$compile,$window) {
       ngModel.$setViewValue( elem.html() );
     }
 
+    // add default class
+    elem.addClass(editableClass);
+
+    // render always with model value
     ngModel.$render = function() {
-      // render always with model value
       elem.html( ngModel.$modelValue )
     }
 
@@ -87,7 +88,6 @@ function contentEditable($log,$sce,$compile,$window) {
       // if text needs to be rendered as html
       if( attrs.renderHtml && noEscape ) {
 
-        console.log(noEscape);
         // get plain text html (with html tags)
         // replace all blank spaces
         html = elem[0].textContent.replace(/\u00a0/g, " ")
@@ -106,7 +106,7 @@ function contentEditable($log,$sce,$compile,$window) {
 
         /**
          * This method should be called
-         * when a control wants to
+         * when a controller wants to
          * change the view value
          */
         ngModel.$setViewValue(html)
@@ -114,7 +114,7 @@ function contentEditable($log,$sce,$compile,$window) {
         // if user passed a valid callback
         if( scope.editCallback && angular.isFunction(scope.editCallback) ) {
           // apply the callback
-          // passing: current text and element
+          // with arguments: current text and element
           return scope.$apply( scope.editCallback(html, elem) );
         }
 
@@ -127,19 +127,20 @@ function contentEditable($log,$sce,$compile,$window) {
 
       // on tab key blur and
       // TODO: focus to next
-      if(e.which == 9) {
+      if( e.which == 9 ) {
         return elem[0].blur();
       }
 
       // on esc key roll back value and blur
-      if(e.which == 27) {
+      if( e.which == 27 ) {
         ngModel.$rollbackViewValue();
         noEscape = false;
         return elem[0].blur();
       }
 
-      // if single line blur or enter key
-      if(e.which == 13 && attrs.singleLine) {
+      // if single line or ctrl key is
+      // pressed trigger the blur event
+      if( e.which == 13 && (attrs.singleLine || e.ctrlKey) ) {
         return elem[0].blur();
       }
 
