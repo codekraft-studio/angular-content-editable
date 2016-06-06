@@ -6,8 +6,9 @@
 
   var defaults = {
     editableClass: 'editable',
+    keyBindings: true, // default true for key shortcuts
     singleLine: false,
-    focusSelect: true,
+    focusSelect: true, // default on focus select all text inside
     renderHtml: false,
     editCallback: false
   }
