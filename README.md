@@ -34,7 +34,7 @@ Note that, __edit-callback__ has two arguments:
  * __elem__: the element that has been modified
 
 ---
-## Example basic:
+### Example basic:
 Simply adding the directive makes the element fully editable.
 ```html
 <h2 content-editable>Change me if you like.</h2>
@@ -61,4 +61,16 @@ angular.module('myApp')
     }
 
   })
+```
+
+### Development:
+If you want to fork you copy of the project and modify it:
+```bash
+npm install npm i angular-content-editable
+npm install
+```
+Than a Gruntfile is ready with this actions:
+```bash
+grunt   // build the package
+grunt watch   // watch to /src folder and rebuild the package
 ```
