@@ -22,7 +22,9 @@ and you are ready to go, add the directive to any element you want:
 ```html
 <a href="!#" content-editable>edit my text</a>
 ```
+
 ---
+
 ### Directive attributes:
   * __single-line__: if set to true makes the enter key save and blur
   * __focus-select__: if set to true when element goes to focus, all the text inside will be selected
@@ -34,6 +36,22 @@ Note that, __edit-callback__ has two arguments:
  * __elem__: the element that has been modified
 
 ---
+
+### Customizations:
+You can use the __contentEditableProvider__ to set the default settings for the directive, but you can always pass directly to the directive as attributes to override the defaults for that element.
+```javascript
+angular.module('app')
+  .config(function(contentEditableProvider) {
+
+    contentEditableProvider.configure({
+      singleLine: true // single line for all elements
+    })
+
+  })
+```
+
+---
+
 ### Example basic:
 Simply adding the directive makes the element fully editable.
 ```html
