@@ -8,3 +8,7 @@ section p { font-size: 1.2em; }
 h1 { font-weight: 700;font-size: 3em;}
 h2 {font-weight: 600;font-size: 2em; font-family: 'rs';}
 div.hcont {width: 80%;margin: 0 auto;position: relative;}
+
+.editable:hover{ background-color: #eee; }
+.editable-custom{font-size: 1.5rem;}
+.editable-custom:hover{background-color: #28e7fb;color: white;}
