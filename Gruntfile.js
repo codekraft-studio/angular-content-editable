@@ -20,13 +20,19 @@ module.exports = function(grunt) {
           'dist/<%= pkg.name %>.min.js': ['dist/<%= pkg.name %>.js']
         }
       }
+    },
+
+    watch: {
+      files: ['src/*'],
+      tasks: ['default'],
     }
 
   })
 
-  grunt.registerTask('default', ['concat:dist', 'uglify:dist'])
-
   grunt.loadNpmTasks('grunt-contrib-concat')
   grunt.loadNpmTasks('grunt-contrib-uglify')
+  grunt.loadNpmTasks('grunt-contrib-watch')
 
+  grunt.registerTask('default', ['concat:dist', 'uglify:dist'])
+  
 }
