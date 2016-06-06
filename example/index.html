@@ -48,6 +48,10 @@
         <br>And remember, if <b>you made a mess</b> and you want to <b>undo the changes</b> simply press <kbd>Esc</kbd> and rollback to previous value.
       </p>
 
+      <div href="#!" ng-model="viewStrings.custParagraph" single-line="true" editable-class="editable-custom" content-editable>
+        Dhis href with the directive a kustom clas, beucas it is so special :|
+      </div>
+
       <p ng-model="viewStrings.secondParagraph" render-html="true" content-editable>
         This element is enabled with the <b>render-html</b> attribute that allow to modify the html code of the content.
         Try <i>clicking somewhere</i> and you will see how it works!
@@ -74,7 +78,7 @@ angular.module('app', [
 .config(function (contentEditableProvider) {
 
   contentEditableProvider.configure({
-    editableClass: 'my-class'
+    // some user conf
   });
 
 })
