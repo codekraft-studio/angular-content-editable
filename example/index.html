@@ -69,7 +69,17 @@
 angular.module('app', [
   'angular-content-editable',
   'ngStorage'
-]).controller('mainCtrl', function($scope, $localStorage) {
+])
+
+.config(function (contentEditableProvider) {
+
+  contentEditableProvider.configure({
+    editableClass: 'my-class'
+  });
+
+})
+
+.controller('mainCtrl', function($scope, $localStorage) {
 
   // get example strings
   $scope.viewStrings = $localStorage.getObject('exampleStrings') || {};
