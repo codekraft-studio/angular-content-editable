@@ -84,8 +84,8 @@ angular.module('myApp')
 ### Development:
 If you want to fork you copy of the project and modify it:
 ```bash
-npm install npm i angular-content-editable
-npm install
+npm install angular-content-editable // install module files
+npm install // install dependencies
 ```
 Than a Gruntfile is ready with this actions:
 ```bash
