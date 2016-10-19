@@ -12,11 +12,11 @@ or directly from github.
 
 Add the script to your page dependencies:
 ```html
-<script type="text/javascript" src="content-editable.min.js"></script>
+<script type="text/javascript" src="angular-content-editable.min.js"></script>
 ```
 And finally add __content-editable__ to your module dependencies:
 ```javascript
-angular.module('app', ['content-editable'])
+angular.module('app', ['angular-content-editable'])
 ```
 and you are ready to go, add the directive to any element you want:
 ```html
