@@ -20,7 +20,7 @@ angular.module('app', ['angular-content-editable'])
 ```
 and you are ready to go, add the directive to any element you want:
 ```html
-<a href="!#" content-editable>edit my text</a>
+<a href="!#" ng-model="myModel" content-editable>edit my text</a>
 ```
 
 ---
@@ -55,20 +55,20 @@ angular.module('app')
 ### Example basic:
 Simply adding the directive makes the element fully editable.
 ```html
-<h2 content-editable>Change me if you like.</h2>
+<h2 ng-model="myModel" content-editable>Change me if you like.</h2>
 ```
 With __single-line__ attribute, when enter key is pressed the editing will finish (no line-breaks):
 ```html
-<div single-line="true" content-editable>Change me anyway.</div>
+<div single-line="true" ng-model="myModel" content-editable>Change me anyway.</div>
 ```
 
 With __focus-select__ all text content will be selected on element click or focus.
 ```html
-<span focus-select="true" content-editable>Change me!</span>
+<span focus-select="true" ng-model="myModel" content-editable>Change me!</span>
 ```
 With __edit-callback__ attribute if you passed a valid function it will run every time the model value is changed.
 ```html
-<span focus-select="true" edit-callback="myFunc" content-editable>Change me!</span>
+<span focus-select="true" edit-callback="myFunc" ng-model="myModel" content-editable>Change me!</span>
 ```
 ```javascript
 angular.module('myApp')
