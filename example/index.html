@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html ng-app="app" ng-strict-di>
 <head>
     <meta charset="utf-8">
     <title>AngularJs Content Editable - codekraft studio</title>
@@ -75,15 +75,15 @@ angular.module('app', [
     'ngStorage'
 ])
 
-.config(function (contentEditableProvider) {
+.config(['contentEditableProvider', function (contentEditableProvider) {
 
     contentEditableProvider.configure({
         // some user conf
     });
 
-})
+}])
 
-.controller('mainCtrl', function($scope, $localStorage) {
+.controller('mainCtrl', ['$scope', '$localStorage', function($scope, $localStorage) {
 
     // get example strings
     $scope.viewStrings = $localStorage.getObject('exampleStrings') || {};
@@ -96,11 +96,7 @@ angular.module('app', [
         alert('callback dude!');
     }
 
-})
-
-angular.element(document).ready(function() {
-    angular.bootstrap(document, ['app'])
-})
+}]);
 
 </script>
 </html>

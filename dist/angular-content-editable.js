@@ -1,6 +1,8 @@
-angular.module('angular-content-editable', [])
+angular.module('angular-content-editable', []);
 
-.directive('contentEditable', function ($log,$sce,$compile,$window,contentEditable) {
+angular.module('angular-content-editable')
+
+.directive('contentEditable', ['$log', '$sce', '$compile', '$window', 'contentEditable', function ($log,$sce,$compile,$window,contentEditable) {
 
     var directive = {
         restrict: 'A',
@@ -173,7 +175,9 @@ angular.module('angular-content-editable', [])
 
     }
 
-})
+}])
+
+angular.module('angular-content-editable')
 
 /**
  * Provider to setup the default
@@ -198,4 +202,4 @@ angular.module('angular-content-editable', [])
     return defaults;
   }
 
-})
+});

@@ -1,3 +1,5 @@
+angular.module('angular-content-editable')
+
 /**
  * Provider to setup the default
  * module options for the directive
@@ -21,4 +23,4 @@
     return defaults;
   }
 
-})
+});

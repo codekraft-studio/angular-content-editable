@@ -1,3 +1,5 @@
+angular.module('angular-content-editable')
+
 .directive('contentEditable', function ($log,$sce,$compile,$window,contentEditable) {
 
     var directive = {
