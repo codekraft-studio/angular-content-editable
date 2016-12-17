@@ -23,16 +23,29 @@ module.exports = function(grunt) {
     },
 
     watch: {
-      files: ['src/*'],
-      tasks: ['default'],
-    }
+      files: ['src/**/*.js'],
+      tasks: ['build'],
+    },
+
+    ngAnnotate: {
+      options: {
+        singleQuotes: true,
+      },
+      dist: {
+        files: {
+          'dist/<%= pkg.name %>.js': ['dist/<%= pkg.name %>.js']
+        }
+      },
+    },
 
   })
 
-  grunt.loadNpmTasks('grunt-contrib-concat')
-  grunt.loadNpmTasks('grunt-contrib-uglify')
-  grunt.loadNpmTasks('grunt-contrib-watch')
+  grunt.loadNpmTasks('grunt-contrib-concat');
+  grunt.loadNpmTasks('grunt-contrib-uglify');
+  grunt.loadNpmTasks('grunt-contrib-watch');
+  grunt.loadNpmTasks('grunt-ng-annotate');
 
-  grunt.registerTask('default', ['concat:dist', 'uglify:dist'])
-  
+  grunt.registerTask('default', ['watch']);
+  grunt.registerTask('build', ['concat', 'ngAnnotate', 'uglify']);
+
 }
