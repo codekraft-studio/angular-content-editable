@@ -23,6 +23,9 @@ module.exports = function(grunt) {
     },
 
     watch: {
+      options: {
+        spawn: false
+      },
       files: ['src/**/*.js'],
       tasks: ['build'],
     },
