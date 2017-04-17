@@ -59,8 +59,10 @@ angular.module('angular-content-editable')
       // select all on focus
       if( options.focusSelect ) {
         var range = $window.document.createRange();
+        var selection = $window.getSelection();
         range.selectNodeContents( originalElement );
-        $window.getSelection().addRange(range);
+        selection.removeAllRanges();
+        selection.addRange(range);
       }
       // if render-html is enabled convert
       // all text content to plaintext
