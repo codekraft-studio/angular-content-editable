@@ -2,12 +2,12 @@ angular.module('angular-content-editable', []);
 
 angular.module('angular-content-editable')
 
-.directive('contentEditable', ['$log', '$sce', '$compile', '$window', 'contentEditable', function ($log,$sce,$compile,$window,contentEditable) {
+.directive('contentEditable', ['$log', '$sce', '$parse', '$window', 'contentEditable', function ($log, $sce, $parse, $window, contentEditable) {
 
   var directive = {
     restrict: 'A',
     require: '?ngModel',
-    scope: { editCallback: '=', ngModel: '=' },
+    scope: { editCallback: '=' },
     link: _link
   }
 
@@ -23,12 +23,14 @@ angular.module('angular-content-editable')
 
     var noEscape = true;
     var originalElement = elem[0];
+
     // get default usage options
     var options = angular.copy(contentEditable);
+
     // update options with attributes
     angular.forEach(options, function (val, key) {
-      if( key in attrs && typeof attrs[key] !== 'undefined' ) {
-        options[key] = attrs[key];
+      if( key in attrs ) {
+        options[key] = $parse(attrs[key])(scope);
       }
     });
 
@@ -61,8 +63,10 @@ angular.module('angular-content-editable')
       // select all on focus
       if( options.focusSelect ) {
         var range = $window.document.createRange();
+        var selection = $window.getSelection();
         range.selectNodeContents( originalElement );
-        $window.getSelection().addRange(range);
+        selection.removeAllRanges();
+        selection.addRange(range);
       }
       // if render-html is enabled convert
       // all text content to plaintext
