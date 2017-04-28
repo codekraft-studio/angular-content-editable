@@ -6,7 +6,7 @@ angular.module('angular-content-editable')
 
   var directive = {
     restrict: 'A',
-    require: '?ngModel',
+    require: 'ngModel',
     scope: { editCallback: '=' },
     link: _link
   }
@@ -33,19 +33,13 @@ angular.module('angular-content-editable')
         options[key] = $parse(attrs[key])(scope);
       }
     });
-
-    // if model is invalid or null
-    // fill his value with elem html content
-    if( !scope.ngModel ) {
-      ngModel.$setViewValue( elem.html() );
-    }
-
+    
     // add editable class
     attrs.$addClass(options.editableClass);
 
     // render always with model value
     ngModel.$render = function() {
-      elem.html( ngModel.$modelValue || '' );
+      elem.html( ngModel.$modelValue || elem.html() );
     }
 
     // handle click on element
@@ -58,8 +52,10 @@ angular.module('angular-content-editable')
     // check some option extra
     // conditions during focus
     function onFocus(e) {
+
       // turn on the flag
       noEscape = true;
+
       // select all on focus
       if( options.focusSelect ) {
         var range = $window.document.createRange();
@@ -68,12 +64,14 @@ angular.module('angular-content-editable')
         selection.removeAllRanges();
         selection.addRange(range);
       }
+
       // if render-html is enabled convert
       // all text content to plaintext
       // in order to modify html tags
       if( options.renderHtml ) {
         originalElement.textContent = elem.html();
       }
+
     }
 
     function onBlur(e) {

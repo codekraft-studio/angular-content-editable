@@ -24,7 +24,8 @@ module.exports = function(grunt) {
 
     watch: {
       options: {
-        spawn: false
+        spawn: false,
+        livereload: true
       },
       files: ['src/**/*.js'],
       tasks: ['build'],
@@ -41,14 +42,32 @@ module.exports = function(grunt) {
       },
     },
 
+    connect: {
+      server: {
+        options: {
+          port: 8080,
+          hostname: 'localhost',
+          livereload: true,
+          base: {
+            path: '.',
+            options: {
+              index: 'example/index.html'
+            }
+          },
+          open: true
+        }
+      }
+    }
+
   })
 
   grunt.loadNpmTasks('grunt-contrib-concat');
   grunt.loadNpmTasks('grunt-contrib-uglify');
   grunt.loadNpmTasks('grunt-contrib-watch');
+  grunt.loadNpmTasks('grunt-contrib-connect');
   grunt.loadNpmTasks('grunt-ng-annotate');
 
-  grunt.registerTask('default', ['watch']);
+  grunt.registerTask('default', ['connect', 'watch']);
   grunt.registerTask('build', ['concat', 'ngAnnotate', 'uglify']);
 
 }
