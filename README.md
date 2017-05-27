@@ -8,6 +8,12 @@ Download the package using npm:
 ```bash
 npm install angular-content-editable
 ```
+
+Download the package using bower:
+```bash
+bower install angular-content-editable
+```
+
 or directly from github.
 
 Add the script to your page dependencies:
