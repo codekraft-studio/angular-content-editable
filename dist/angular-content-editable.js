@@ -7,7 +7,7 @@ angular.module('angular-content-editable')
   var directive = {
     restrict: 'A',
     require: 'ngModel',
-    scope: { editCallback: '=' },
+    scope: { editCallback: '&?' },
     link: _link
   }
 
@@ -105,12 +105,17 @@ angular.module('angular-content-editable')
         * change the view value
         */
         ngModel.$setViewValue(html)
+        
         // if user passed a variable
         // and is a function
         if( scope.editCallback && angular.isFunction(scope.editCallback) ) {
-          // apply the callback
-          // with arguments: current text and element
-          return scope.$apply( scope.editCallback(html, elem) );
+
+          // run the callback with arguments: current text and element
+          return scope.editCallback({
+            text: html,
+            elem: elem
+          });
+        
         }
 
       }
