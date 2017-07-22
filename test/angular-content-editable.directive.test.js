@@ -18,7 +18,7 @@ describe("Angular Content Editable: Directive", function () {
     scope = $rootScope.$new();
     scope.myModel = 'Text to be modified.';
     scope.onEdit = jasmine.createSpy('onEdit');
-    element = $compile('<h1 ng-model="myModel" edit-callback="onEdit" content-editable></h1>')(scope);
+    element = $compile('<h1 ng-model="myModel" edit-callback="onEdit(text, elem)" content-editable></h1>')(scope);
     scope.$digest();
   });
 
