@@ -41,82 +41,93 @@ angular.module('angular-content-editable')
     }
 
     // handle click on element
-    function onClick(e){
+    function onClick(e) {
       e.preventDefault();
       attrs.$set('contenteditable', 'true');
-      return originalElement.focus();
+      attrs.$addClass('active');
+      originalElement.focus();
     }
 
     // check some option extra
     // conditions during focus
     function onFocus(e) {
-
-      // turn on the flag
-      noEscape = true;
-
-      // select all on focus
-      if( options.focusSelect ) {
-        var range = $window.document.createRange();
-        var selection = $window.getSelection();
-        range.selectNodeContents( originalElement );
-        selection.removeAllRanges();
-        selection.addRange(range);
-      }
-
-      // if render-html is enabled convert
-      // all text content to plaintext
-      // in order to modify html tags
-      if( options.renderHtml ) {
-        originalElement.textContent = elem.html();
-      }
+      
+      scope.$apply(function() {
+        
+        // turn on the flag
+        noEscape = true;
+        
+        // select all on focus
+        if( options.focusSelect ) {
+          var range = $window.document.createRange();
+          var selection = $window.getSelection();
+          range.selectNodeContents( originalElement );
+          selection.removeAllRanges();
+          selection.addRange(range);
+        }
+        
+        // if render-html is enabled convert
+        // all text content to plaintext
+        // in order to modify html tags
+        if( options.renderHtml ) {
+          originalElement.textContent = elem.html();
+        }
+        
+      });
 
     }
 
     function onBlur(e) {
-
-      // the text
-      var html;
-
-      // disable editability
-      attrs.$set('contenteditable', 'false');
-
-      // if text needs to be rendered as html
-      if( options.renderHtml && noEscape ) {
-        // get plain text html (with html tags)
-        // replace all blank spaces
-        html = originalElement.textContent.replace(/\u00a0/g, " ");
-        // update elem html value
-        elem.html(html);
-
-      } else {
-        // get element content replacing html tag
-        html = elem.html().replace(/&nbsp;/g, ' ');
-      }
-
-      // if element value is
-      // different from model value
-      if( html != ngModel.$modelValue ) {
-
-        /**
-        * This method should be called
-        * when a controller wants to
-        * change the view value
-        */
-        ngModel.$setViewValue(html)
+      
+      scope.$apply(function() {
         
-        // if user passed a variable
-        // and is a function
-        if( scope.editCallback && angular.isFunction(scope.editCallback) ) {
-
-          // run the callback with arguments: current text and element
-          return scope.editCallback({
-            text: html,
-            elem: elem
-          });
+        // the text
+        var html;
         
+        // remove active class when editing is over
+        attrs.$removeClass('active');
+        
+        // disable editability
+        attrs.$set('contenteditable', 'false');
+        
+        // if text needs to be rendered as html
+        if( options.renderHtml && noEscape ) {
+          // get plain text html (with html tags)
+          // replace all blank spaces
+          html = originalElement.textContent.replace(/\u00a0/g, " ");
+          // update elem html value
+          elem.html(html);
+          
+        } else {
+          // get element content replacing html tag
+          html = elem.html().replace(/&nbsp;/g, ' ');
         }
-
-      }
+        
+        // if element value is different from model value
+        if( html != ngModel.$modelValue ) {
+          
+          /**
+          * This method should be called
+          * when a controller wants to
+          * change the view value
+          */
+          ngModel.$setViewValue(html)
+          
+          // if user passed a variable
+          // and is a function
+          if( scope.editCallback && angular.isFunction(scope.editCallback) ) {
+            
+            // run the callback with arguments: current text and element
+            return scope.editCallback({
+              text: html,
+              elem: elem
+            });
+            
+          }
+          
+        }
+          
+      });
 
     }
 
