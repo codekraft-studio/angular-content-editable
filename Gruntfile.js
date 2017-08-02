@@ -48,12 +48,6 @@ module.exports = function(grunt) {
           port: 8080,
           hostname: 'localhost',
           livereload: true,
-          base: {
-            path: '.',
-            options: {
-              index: 'example/index.html'
-            }
-          },
           open: true
         }
       }
