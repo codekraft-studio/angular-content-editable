@@ -7,7 +7,7 @@
     "example": "example"
   },
   "scripts": {
-    "test": "node node_modules/karma/bin/karma start"
+    "test": "node node_modules/karma/bin/karma start --single-run"
   },
   "repository": {
     "type": "git",
@@ -24,6 +24,8 @@
   "homepage": "https://github.com/codekraft-studio/angular-content-editable#readme",
   "license": "ISC",
   "devDependencies": {
+    "angular": "^1.6.5",
+    "angular-mocks": "^1.6.5",
     "grunt": "^0.4.5",
     "grunt-contrib-concat": "^1.0.1",
     "grunt-contrib-connect": "^1.0.2",
