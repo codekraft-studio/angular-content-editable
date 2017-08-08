@@ -7,9 +7,9 @@ angular.module('angular-content-editable')
   var directive = {
     restrict: 'A',
     require: 'ngModel',
-    scope: { editCallback: '&?' },
+    scope: { editCallback: '&?', isEditing: '=?' },
     link: _link
-  }
+  };
 
   return directive;
 
@@ -37,10 +37,20 @@ angular.module('angular-content-editable')
     // add editable class
     attrs.$addClass(options.editableClass);
 
+    scope.$watch('isEditing', function(newValue, oldValue) {
+      if (newValue !== oldValue) {
+        if (newValue) {
+          originalElement.click();
+        } else {
+          originalElement.blur();
+        }
+      }
+    });
+
     // render always with model value
     ngModel.$render = function() {
       elem.html( ngModel.$modelValue || elem.html() );
-    }
+    };
 
     // handle click on element
     function onClick(e) {
@@ -53,9 +63,12 @@ angular.module('angular-content-editable')
     // check some option extra
     // conditions during focus
     function onFocus(e) {
-      
-      scope.$apply(function() {
-        
+
+      // evalAsync in case a digest is already in progress (e.g. changing isEditing to true)
+      scope.$evalAsync(function() {
+
+        scope.isEditing = true;
+
         // turn on the flag
         noEscape = true;
         
@@ -80,11 +93,13 @@ angular.module('angular-content-editable')
     }
 
     function onBlur(e) {
-      
+
       scope.$apply(function() {
-        
+
         // the text
         var html;
+        
+        scope.isEditing = false;
         
         // remove active class when editing is over
         attrs.$removeClass('active');
@@ -113,7 +128,7 @@ angular.module('angular-content-editable')
           * when a controller wants to
           * change the view value
           */
-          ngModel.$setViewValue(html)
+          ngModel.$setViewValue(html);
           
           // if user passed a variable
           // and is a function
@@ -195,7 +210,7 @@ angular.module('angular-content-editable')
 
   }
 
-}])
+}]);
 
 angular.module('angular-content-editable')
 

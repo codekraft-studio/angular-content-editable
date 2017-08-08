@@ -36,6 +36,7 @@ and you are ready to go, add the directive to any element you want:
   * __focus-select__: if set to true when element goes to focus, all the text inside will be selected
   * __render-html__: if set to true allow the text passed as input to be compiled and rendered
   * __edit-callback__: a callback that is called wherever the model value is changed
+  * __is-editing__: optional argument that can be used to programatically enable/disable the editor
 
 Note that, __edit-callback__ has two arguments, that you must specify in your template to use them:
  * __text__: the new text inside the element
@@ -120,7 +121,9 @@ grunt build   // build the package for distribution
 1. Create an issue and describe your idea
 2. Fork the project (https://github.com/codekraft-studio/angular-content-editable/fork)
 3. Create your feature branch (`git checkout -b my-new-feature`)
-4. Commit your changes (`git commit -am 'Add some feature'`)
-5. Publish the branch (`git push origin my-new-feature`)
-6. Add some test for your new feature
-7. Create a new Pull Request
+4. Get the development environment set up (`npm install`)
+5. Commit your changes (`git commit -am 'Add some feature'`)
+6. Add some test for your new feature (`npm test`)
+7. Build the directive with the new changes (`grunt build`)
+8. Publish the branch (`git push origin my-new-feature`)
+9. Create a new Pull Request
