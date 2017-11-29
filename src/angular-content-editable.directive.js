@@ -19,8 +19,7 @@ angular.module('angular-content-editable')
       return;
     }
 
-    var noEscape = true;
-    var originalElement = elem[0];
+    var noEscape = true, originalElement = elem[0], callback;
 
     // get default usage options
     var options = angular.copy(contentEditable);
@@ -31,7 +30,10 @@ angular.module('angular-content-editable')
         options[key] = $parse(attrs[key])(scope);
       }
     });
-    
+
+    // Get the callback from item scope or global defined
+    callback = scope.editCallback || options.editCallback;
+
     // add editable class
     attrs.$addClass(options.editableClass);
 
@@ -69,7 +71,7 @@ angular.module('angular-content-editable')
 
         // turn on the flag
         noEscape = true;
-        
+
         // select all on focus
         if( options.focusSelect ) {
           var range = $window.document.createRange();
@@ -78,14 +80,14 @@ angular.module('angular-content-editable')
           selection.removeAllRanges();
           selection.addRange(range);
         }
-        
+
         // if render-html is enabled convert
         // all text content to plaintext
         // in order to modify html tags
         if( options.renderHtml ) {
           originalElement.textContent = elem.html();
         }
-        
+
       });
 
     }
@@ -96,15 +98,15 @@ angular.module('angular-content-editable')
 
         // the text
         var html;
-        
+
         scope.isEditing = false;
-        
+
         // remove active class when editing is over
         attrs.$removeClass('active');
-        
+
         // disable editability
         attrs.$set('contenteditable', 'false');
-        
+
         // if text needs to be rendered as html
         if( options.renderHtml && noEscape ) {
           // get plain text html (with html tags)
@@ -112,36 +114,36 @@ angular.module('angular-content-editable')
           html = originalElement.textContent.replace(/\u00a0/g, " ");
           // update elem html value
           elem.html(html);
-          
+
         } else {
           // get element content replacing html tag
           html = elem.html().replace(/&nbsp;/g, ' ');
         }
-        
+
         // if element value is different from model value
         if( html != ngModel.$modelValue ) {
-          
+
           /**
           * This method should be called
           * when a controller wants to
           * change the view value
           */
           ngModel.$setViewValue(html);
-          
+
           // if user passed a variable
           // and is a function
-          if( scope.editCallback && angular.isFunction(scope.editCallback) ) {
-            
+          if( callback && angular.isFunction(callback) ) {
+
             // run the callback with arguments: current text and element
-            return scope.editCallback({
+            return callback({
               text: html,
               elem: elem
             });
-            
+
           }
-          
+
         }
-          
+
       });
 
     }
