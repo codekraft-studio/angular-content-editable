@@ -7,7 +7,10 @@
     "example": "example"
   },
   "scripts": {
-    "test": "node node_modules/karma/bin/karma start --single-run"
+    "test": "karma start --single-run",
+    "start": "grunt",
+    "prebuild": "npm run test",
+    "build": "grunt build"
   },
   "repository": {
     "type": "git",
