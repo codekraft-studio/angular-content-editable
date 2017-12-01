@@ -52,4 +52,24 @@ describe("Angular Content Editable: Directive", function () {
     scope.$digest();
     expect(scope.isEditing).toBe(false);
   });
+  
+  it('should strip all html tags from text', function () {
+    element = angular.element('<h1 ng-model="myModel" edit-callback="onEdit(\'extraArg\', text, elem)" is-editing="isEditing" strip-replace="true" content-editable></h1>');
+    $compile(element)(scope);
+    scope.$digest();
+    element.triggerHandler('click');
+    element.html('Some random text <b>change</b>.');
+    element.triggerHandler('blur');
+    expect(element.html()).toContain("Some random text change.");
+  });
+  
+  it('should replace all matching strings', function () {
+    element = angular.element('<h1 ng-model="myModel" edit-callback="onEdit(\'extraArg\', text, elem)" is-editing="isEditing" strip-replace="[\'change\',\'success\',\'g\']" content-editable></h1>');
+    $compile(element)(scope);
+    scope.$digest();
+    element.triggerHandler('click');
+    element.html('Some random text change.');
+    element.triggerHandler('blur');
+    expect(element.html()).toContain("Some random text success.");
+  });
 });

@@ -70,6 +70,12 @@
         <br>and you can make her doing all types of crazy things, like: <i>saving the data just changed with a ajax http request</i>, or <i>save the data in local storage</i> like in the example showed in this page
       </p>
       
+      <p ng-model="viewStrings.stripReplaceParagraph" focus-select="false" single-line="false" strip-replace="['html','<b>CHANGED to something else</b>','g']" content-editable>
+        If you specify array or simply "true" inside a <b>strip replace</b> attribute every time your model change,
+        <br>the text will be stripped of all html tags, in case of setting <b>strip replace</b> to "true".
+        <br>If you specify array, the array will be converted to regular expression and the text will be matched (and changed) to your parametters.
+      </p>
+      
     </section>
   </article>
 </body>
