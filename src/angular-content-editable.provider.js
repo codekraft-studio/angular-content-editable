@@ -12,7 +12,8 @@ angular.module('angular-content-editable')
     singleLine: false,
     focusSelect: true, // default on focus select all text inside
     renderHtml: false,
-    editCallback: false
+    editCallback: false,
+    stripReplace: false
   }
 
   this.configure = function (options) {

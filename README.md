@@ -37,6 +37,7 @@ and you are ready to go, add the directive to any element you want:
   * __render-html__: if set to true allow the text passed as input to be compiled and rendered
   * __edit-callback__: a callback that is called wherever the model value is changed
   * __is-editing__: optional argument that can be used to programatically enable/disable the editor
+  * __strip-replace__: optional argument that can be `true` to remove all HTML tags and line breaks, `string` to remove or custom regular `expression`, or array with `expression` to match with `replacement` to and `flags` use: `['expression','replacement','flags']`
 
 Note that, __edit-callback__ has two arguments, that you must specify in your template to use them:
  * __text__: the new text inside the element
@@ -79,6 +80,18 @@ With __single-line__ attribute, when enter key is pressed the editing will finis
 With __focus-select__ all text content will be selected on element click or focus.
 ```html
 <span focus-select="true" ng-model="myModel" content-editable>Change me!</span>
+```
+
+With __strip-replace__ attribute set as `boolean`:
+```html
+<!-- boolean: removes all HTML tags and line breaks -->
+<span focus-select="true" ng-model="myModel" strip-replace="true" content-editable>Change me!<br><b>I will become clear text without formating</b></span>
+```
+
+With __strip-replace__ attribute set as `array`:
+```html
+<!-- array: creates new RegExp() from array ['string / regular expression','replace with','expression flags'] -->
+<span focus-select="true" ng-model="myModel" strip-replace="[' ','-','gi']" content-editable>Change me!</span>
 ```
 
 If you want to run a callback you must use __edit-callback__ attribute with a valid function and it will run every time the model value is __changed__.

@@ -7,7 +7,7 @@ angular.module('angular-content-editable')
   var directive = {
     restrict: 'A',
     require: 'ngModel',
-    scope: { editCallback: '&?', isEditing: '=?' },
+    scope: { editCallback: '&?', isEditing: '=?', stripReplace: '=?' },
     link: _link
   };
 
@@ -21,7 +21,7 @@ angular.module('angular-content-editable')
       return;
     }
 
-    var noEscape = true, originalElement = elem[0], callback;
+    var noEscape = true, originalElement = elem[0], callback, stripReplace;
 
     // get default usage options
     var options = angular.copy(contentEditable);
@@ -35,6 +35,9 @@ angular.module('angular-content-editable')
 
     // Get the callback from item scope or global defined
     callback = scope.editCallback || options.editCallback;
+
+    // Get the strip tags option from item scope or global defined
+    stripReplace = scope.stripReplace || options.stripReplace;
 
     // add editable class
     attrs.$addClass(options.editableClass);
@@ -124,7 +127,25 @@ angular.module('angular-content-editable')
 
         // if element value is different from model value
         if( html != ngModel.$modelValue ) {
-
+          
+          // if user defined strip-replace variable
+          if( stripReplace ){
+            if( angular.isString(stripReplace) ) {
+              // if stripReplace is a string create new RegExp with gi (global, ignore case)
+              html = html.replace( new RegExp( stripReplace, 'g' ), '' );
+            }else if( angular.isArray(stripReplace) ){
+              // if stripReplace is an array create new RegExp from array values
+              // get values from array or set default
+              var e = stripReplace[0] || '', r = stripReplace[1] || '', f = stripReplace[2] || 'g';
+              html = html.replace( new RegExp( e, f ), r );
+            }else{
+              // if stripReplace is set to "true", remove all html tags and new line breaks
+              html = html.replace(/(<([^>]+)>)/ig, '').replace(/\r?\n|\r/g, '');
+            }
+            // update elem html value
+            elem.html(html);
+          }
+          
           /**
           * This method should be called
           * when a controller wants to
@@ -228,7 +249,8 @@ angular.module('angular-content-editable')
     singleLine: false,
     focusSelect: true, // default on focus select all text inside
     renderHtml: false,
-    editCallback: false
+    editCallback: false,
+    stripReplace: false
   }
 
   this.configure = function (options) {
