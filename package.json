@@ -1,6 +1,6 @@
 {
   "name": "angular-content-editable",
-  "version": "1.2.2",
+  "version": "1.2.3",
   "description": "modify in real time any html tag you want",
   "main": "dist/angular-content-editable.js",
   "directories": {
