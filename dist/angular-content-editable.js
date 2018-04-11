@@ -69,10 +69,15 @@ angular.module('angular-content-editable')
     // conditions during focus
     function onFocus(e) {
 
+      scope.isEditing = true;
+
       // evalAsync in case a digest is already in progress (e.g. changing isEditing to true)
       scope.$evalAsync(function() {
 
-        scope.isEditing = true;
+        // Ensure editing is still enabled before proceeding (prevents hang in IE11)
+        if (!scope.isEditing) {
+          return;
+        }
 
         // turn on the flag
         noEscape = true;
@@ -99,12 +104,17 @@ angular.module('angular-content-editable')
 
     function onBlur(e) {
 
+      scope.isEditing = false;
+
       scope.$apply(function() {
 
         // the text
         var html;
 
-        scope.isEditing = false;
+        // Ensure editing is still disabled before proceeding (prevents hang in IE11)
+        if (scope.isEditing) {
+          return;
+        }
 
         // remove active class when editing is over
         attrs.$removeClass('active');
@@ -127,7 +137,7 @@ angular.module('angular-content-editable')
 
         // if element value is different from model value
         if( html != ngModel.$modelValue ) {
-          
+
           // if user defined strip-replace variable
           if( stripReplace ){
             if( angular.isString(stripReplace) ) {
@@ -145,7 +155,7 @@ angular.module('angular-content-editable')
             // update elem html value
             elem.html(html);
           }
-          
+
           /**
           * This method should be called
           * when a controller wants to
