@@ -7,7 +7,7 @@ angular.module('angular-content-editable')
   var directive = {
     restrict: 'A',
     require: 'ngModel',
-    scope: { editCallback: '&?', isEditing: '=?', stripReplace: '=?' },
+    scope: { contentEditable: '<', editCallback: '&?', isEditing: '=?', stripReplace: '=?' },
     link: _link
   };
 
@@ -39,8 +39,15 @@ angular.module('angular-content-editable')
     // Get the strip tags option from item scope or global defined
     stripReplace = scope.stripReplace || options.stripReplace;
 
-    // add editable class
-    attrs.$addClass(options.editableClass);
+    // add editable class depending on directive attribute's value
+    scope.$watch('contentEditable', function (newVal, oldVal) {
+      if (newVal === true) {
+          attrs.$addClass(options.editableClass);
+      } else {
+          attrs.$removeClass(options.editableClass);
+      }
+      
+    });
 
     scope.$watch('isEditing', function(newValue, oldValue) {
       if (newValue !== oldValue) {
